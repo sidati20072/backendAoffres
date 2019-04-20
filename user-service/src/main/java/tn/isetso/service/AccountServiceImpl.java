@@ -1,6 +1,7 @@
 package tn.isetso.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -41,20 +42,20 @@ public class AccountServiceImpl implements AccountService{
 		String type=data.getTypecreation(); 
 		Membre u = new Membre();
 		String password = this.passwordGenerator() ; 
-		if (type.equals("email")) {
-		u.setUsername(data.getEmail());u.setEmail(data.getEmail());u.setPassword(password);
+			u.setUsername(data.getEmail());u.setEmail(data.getEmail());u.setPassword(password);
+			u.setPassword(bcryptPasswordEncoder.encode(u.getPassword()));
+			//Role r = roleRepository.findByRole("USER");
+			//u.getRoles().add(r);
+			if (userRepository.save(u)!=null) {
+				this.addRoleToUser(u.getUsername(), "USER");
+				this.addUserToEntreprise(u.getUsername(), data.getEntreprise());
+				emailService.sendAccountInformation(u, password);
+				System.out.println("success"); 	
+				System.out.println(u);
+			}
+			else System.out.println("echec");
+			
 		
-		}
-		else {
-			u.setEmail(data.getEmail());
-			u.setUsername(data.getUsername());
-			u.setPassword(data.getPassword());
-		}
-		u.setPassword(bcryptPasswordEncoder.encode(u.getPassword()));
-		userRepository.save(u);
-		u.getRoles().add(roleRepository.findByRole("USER"));
-		emailService.sendAccountInformation(u, password);
-
 		return u;
 	}
 
@@ -83,6 +84,15 @@ public class AccountServiceImpl implements AccountService{
 		Membre user=userRepository.findByUsername(username);
 		Role role=roleRepository.findByRole(roleName);
 		user.getRoles().add(role);
+	}
+
+	@Override
+	public void addUserToEntreprise(String username, Long idEntreprise) {
+		
+		Membre user=userRepository.findByUsername(username);
+		Entreprise e = this.entrepriseRepository.findById(idEntreprise).orElse(null);
+		if (e==null) throw new RuntimeException("entreprise not found");
+		user.setEntreprise(e);
 	}
 
 	

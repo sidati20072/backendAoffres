@@ -2,6 +2,7 @@ package tn.isetso.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +22,6 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
 public class Membre {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -38,7 +38,8 @@ public class Membre {
 	private Entreprise entreprise;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	private Collection<Role> roles = new ArrayList<>();
+	private Collection<Role> roles ;
+	
 	
 	
 	public Membre(String username, String password,  Collection<Role> roles) {
@@ -47,5 +48,14 @@ public class Membre {
 		this.password = password;
 		this.roles = roles;
 	}
+
+
+
+	public Membre() {
+		this.roles = new ArrayList<Role>();
+	}
 	
+	public void setEntreprise(Entreprise e) {
+		this.entreprise = e;
+	}
 }

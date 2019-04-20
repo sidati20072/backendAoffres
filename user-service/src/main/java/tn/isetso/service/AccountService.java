@@ -17,4 +17,5 @@ public interface AccountService {
 	public Membre createEntreprise(Membre u , Entreprise e);
 	public Membre saveUser(FormSimpleUser data);
 	public List<Membre> getUsers();
+	public void addUserToEntreprise(String username, Long idEntreprise);
 }

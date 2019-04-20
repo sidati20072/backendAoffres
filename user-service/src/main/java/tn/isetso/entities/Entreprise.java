@@ -22,7 +22,7 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
+
 public class Entreprise {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id ;
@@ -30,6 +30,12 @@ public class Entreprise {
 	private String address;
 	private String logo;
 	private Date createAt;
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="entreprise" , cascade=CascadeType.ALL  )
-	List<Membre> membres ; 
+	@OneToMany
+	List<Membre> membres ;
+
+	public Entreprise() {
+		this.membres = new ArrayList<Membre>();
+	} 
+	
+	
 }

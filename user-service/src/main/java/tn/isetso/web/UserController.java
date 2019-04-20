@@ -23,16 +23,19 @@ public class UserController {
 
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private EntrepriseRepository entrepriseRepository;
 	
 	@PostMapping("/invite")
 	public Membre signUp(@RequestBody FormSimpleUser data) {
+
 		String email=data.getEmail();
 		Membre user = accountService.findUserByEmail(email);
 		
 		if (user!=null) throw new RuntimeException("This user already exist");
+		
 		user = accountService.saveUser(data);
 		return  user;
-		
 		}
 	
 	
