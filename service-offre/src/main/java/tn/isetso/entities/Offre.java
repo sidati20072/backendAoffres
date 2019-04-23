@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +35,11 @@ public class Offre {
 	private String Address2;
 	private String city;
 	private String pays;
+	private Date createAt;
+	@ManyToOne
+	private Membre user;
+	@ManyToOne
+	private Entreprise entreprise;
 	
 	@ManyToMany(fetch=FetchType.EAGER , mappedBy="offres" , cascade= CascadeType.ALL)
 	private List<Category> categories;
@@ -42,6 +48,7 @@ public class Offre {
      private List<Demande> demandes;
 
 	public Offre() {
+		this.createAt = new Date();
 		this.categories = new ArrayList<Category>();
 		this.demandes = new ArrayList<Demande>();
 			

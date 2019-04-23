@@ -10,8 +10,8 @@ import tn.isetso.entities.Membre;
 
 @RepositoryRestResource
 public interface MembreRepository  extends JpaRepository<Membre, Long>{
-	@RestResource(path="/findByUsername")
-	public Membre findByUsername(@Param("username") String username);
+	//@RestResource(path="/findByUsername")@Param("username")
+	public Membre findByUsername( String username);
 	
 	public Membre findByEmail(String email);
 }

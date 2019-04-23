@@ -36,13 +36,16 @@ public class UserServiceApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Role r = new Role();
-		Role r2 = new Role();
+		if (roleRepository.findByRole("USER")==null) {
+			Role r = new Role();		r.setRole("USER");
+			roleRepository.save(r);
+		}
+		
 
-		r.setRole("USER");
-		r2.setRole("ADMIN");
-		roleRepository.save(r);
-		roleRepository.save(r2);
+		if (roleRepository.findByRole("ADMIN")==null) {
+			Role r = new Role();		r.setRole("ADMIN");
+			roleRepository.save(r);
+		}
 
 		}
 
