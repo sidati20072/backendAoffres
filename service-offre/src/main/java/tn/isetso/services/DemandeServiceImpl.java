@@ -7,10 +7,12 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import tn.isetso.dao.DemandeRepository;
 import tn.isetso.dao.OffreRepository;
 import tn.isetso.entities.Demande;
+import tn.isetso.entities.Membre;
 import tn.isetso.entities.Offre;
 
 @Service
@@ -35,8 +37,17 @@ public class DemandeServiceImpl implements DemandeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Demande demande = new Demande(null, new Date(), dateExecution, data.getDuree(), data.getDescription(), data.getTarif(), false, data.getDevis(), offre);		
-		demandeRepository.save(demande);
+		RestTemplate restTemplate =new RestTemplate();
+		Membre membre = restTemplate.getForObject("http://localhost:8180/membres/{id}", Membre.class, data.getUserId());
+
+		Demande demande = new Demande(null, new Date(), dateExecution, data.getDuree(), data.getDescription(), data.getTarif(), "pending", data.getDevis(), membre, offre);		
+		
+		System.out.println(demande);
+		try {
+			demandeRepository.save(demande);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return demande;
 	}

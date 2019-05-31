@@ -33,30 +33,19 @@ public class Membre {
 	private String prenom;
 	private String civilite;
 	private String fonction;
-	private String tel;
-	@ManyToOne
-    @JoinColumn
-	private Entreprise entreprise;
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private Collection<Role> roles ;
 	
 	
 	
-	public Membre(String username, String password,  Collection<Role> roles) {
+	public Membre(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.roles = roles;
 	}
 
 
 
 	public Membre() {
-		this.roles = new ArrayList<Role>();
 	}
 	
-	public void setEntreprise(Entreprise e) {
-		this.entreprise = e;
-	}
+	
 }

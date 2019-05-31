@@ -18,6 +18,8 @@ public class RegistrationData {
 	public String nomentreprise ; 
 	public String addressentreprise ; 
 	public String logo ;
+	public String tel ;
+
 	public RegistrationData(String username, String password, String email, String nom, String prenom, String civilite,
 			String fonction, String role, String nomentreprise, String addressentreprise, String logo) {
 		super();

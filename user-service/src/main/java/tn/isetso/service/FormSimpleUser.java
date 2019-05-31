@@ -15,5 +15,6 @@ public class FormSimpleUser {
 	private String repassword;
 	private String typecreation;
 	private Long entreprise;
+	private String tel;
 	
 }

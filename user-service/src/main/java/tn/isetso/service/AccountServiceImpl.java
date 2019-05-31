@@ -96,7 +96,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	
-	
+
 	private String passwordGenerator() {
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
 		String pwd = RandomStringUtils.random( 15, characters );
@@ -106,8 +106,7 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public Membre createEntreprise(Membre user , Entreprise entreprise) {
 			if (userRepository.findByEmail(user.getEmail())!=null || userRepository.findByUsername(user.getEmail())!=null) {
-			return null;
-		}
+				throw new RuntimeException("This user already exist");		}
 		
 		entrepriseRepository.save(entreprise);
 		
@@ -126,6 +125,17 @@ public class AccountServiceImpl implements AccountService{
 		
 	}
 	
-	
-	
+
+	@Override
+	public Membre createFournisseur(Membre user) {
+			if (userRepository.findByEmail(user.getEmail())!=null || userRepository.findByUsername(user.getEmail())!=null) {
+				throw new RuntimeException("This user already exist");		}
+				
+		user.setPassword(bcryptPasswordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+
+		user.getRoles().add(roleRepository.findByRole("FOURNISSEUR"));
+		return user;
+	}
+
 }

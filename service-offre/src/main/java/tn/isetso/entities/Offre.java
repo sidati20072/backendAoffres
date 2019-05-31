@@ -1,18 +1,24 @@
 package tn.isetso.entities;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import tn.isetso.entities.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.BatchSize;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +29,7 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
+
 public class Offre {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id ;
@@ -37,14 +44,15 @@ public class Offre {
 	private String pays;
 	private Date createAt;
 	@ManyToOne
-	private Membre user;
+	private Membre membre;
 	@ManyToOne
 	private Entreprise entreprise;
 	
-	@ManyToMany(fetch=FetchType.EAGER , mappedBy="offres" , cascade= CascadeType.ALL)
+	@ManyToMany( mappedBy="offres" , cascade= CascadeType.ALL)
 	private List<Category> categories;
 
-	 @OneToMany(mappedBy="offre" )
+	@OneToMany
+	@JsonIgnoreProperties("offre")
      private List<Demande> demandes;
 
 	public Offre() {
@@ -53,5 +61,7 @@ public class Offre {
 		this.demandes = new ArrayList<Demande>();
 			
 	}
+	
+	
 	
 }

@@ -72,4 +72,22 @@ public class UserController {
 	
 	
 	
+	//creation user et entreprise 
+		@PostMapping("/create_fournisseur")
+		public Membre createFournisseur(@RequestBody RegistrationData data) {
+			System.out.println(data.toString());
+			Membre u = new Membre() ; 
+			u.setUsername(data.getEmail());
+			u.setEmail(data.getEmail());
+			u.setNom(data.getNom());
+			u.setPrenom(data.getPrenom());
+			u.setFonction(data.getFonction());
+			u.setPassword(data.getPassword());
+			u.setCivilite(data.getCivilite());
+			u.setTel(data.getTel());
+			
+			return accountService.createFournisseur(u) ; 
+			}
+		
+		
 }
