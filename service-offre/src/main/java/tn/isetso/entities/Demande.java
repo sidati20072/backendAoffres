@@ -3,13 +3,7 @@ package tn.isetso.entities;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -24,7 +18,6 @@ import lombok.ToString;
 
 @Entity
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Demande {
@@ -37,17 +30,27 @@ public class Demande {
 	private Double tarif; 
 	private String etat;
 	private String devis;
-	
+
 	@ManyToOne
     @JoinColumn(name = "user_id")
 	private Membre membre;
-	
+
 	@ManyToOne
 	@JsonIgnoreProperties("demandes")
 	@RestResource(exported = false)
 	private Offre offre;
-	
-	
-	
 
+	@Override
+	public String toString() {
+		return "Demande{" +
+				"id=" + id +
+				", createAt=" + createAt +
+				", dateExecution=" + dateExecution +
+				", duree=" + duree +
+				", description='" + description + '\'' +
+				", tarif=" + tarif +
+				", etat='" + etat + '\'' +
+				", devis='" + devis + '\'' +
+				'}';
+	}
 }

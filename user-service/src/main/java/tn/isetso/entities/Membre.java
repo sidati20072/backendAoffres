@@ -13,10 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity(name="user")
 @Data
@@ -34,8 +38,11 @@ public class Membre {
 	private String civilite;
 	private String fonction;
 	private String tel;
-	@ManyToOne
+	private String image;
+	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn
+	@RestResource(exported = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Entreprise entreprise;
 	
 	@ManyToMany(fetch=FetchType.EAGER)

@@ -27,11 +27,11 @@ public class JWTAuthorizationFiltre extends OncePerRequestFilter{
 
 	    response.setHeader("Access-Control-Allow-Origin", "*");
 	    response.setHeader("Access-Control-Allow-Credentials", "true");
-	    response.addHeader("Access-Control-Allow-headers", "Origin, Accept, X-Requested-With, Headers,Authorization");
-		response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Authorization");
-	    response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+	    response.addHeader("Access-Control-Allow-headers", "Origin, Accept, X-Requested-With, Headers,Authorization, authorization");
+		response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Authorization, authorization");
+	    response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, authorization,Authorization");
 
-		response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+		response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE");
 
 		if (request.getMethod().equals("OPTIONS")){
 			

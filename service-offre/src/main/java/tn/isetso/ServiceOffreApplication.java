@@ -15,6 +15,7 @@ import tn.isetso.dao.OffreRepository;
 import tn.isetso.entities.Category;
 import tn.isetso.entities.Demande;
 import tn.isetso.entities.Entreprise;
+import tn.isetso.entities.Favoris;
 import tn.isetso.entities.Membre;
 import tn.isetso.entities.Offre;
 @EnableDiscoveryClient
@@ -36,7 +37,7 @@ private RepositoryRestConfiguration repositoryRestConfiguration;
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		repositoryRestConfiguration.exposeIdsFor(Category.class,Entreprise.class,Demande.class,Offre.class);
+		repositoryRestConfiguration.exposeIdsFor(Category.class,Entreprise.class,Demande.class,Offre.class,Favoris.class);
 		/*if (roleRepository.findByRole("USER")==null) {
 			Role r = new Role();		r.setRole("USER");
 			roleRepository.save(r);

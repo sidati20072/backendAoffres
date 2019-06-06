@@ -29,24 +29,15 @@ public class UserController {
 	
 	@PostMapping("/invite")
 	public Membre signUp(@RequestBody FormSimpleUser data) {
-
 		String email=data.getEmail();
 		Membre user = accountService.findUserByEmail(email);
-		
 		if (user!=null) throw new RuntimeException("This user already exist");
 		
 		user = accountService.saveUser(data);
 		return  user;
 		}
 	
-	@GetMapping("/membres/search/findByUsername")
-	public Membre findByUsername(@RequestParam("username") String username) {
-		
-		if (username==null || username.isEmpty()) throw new RuntimeException("required username");
-		
-		return accountService.findUserByEmail(username);
 
-	}
 	
 	//creation user et entreprise 
 	@PostMapping("/create_entreprise")
@@ -65,6 +56,9 @@ public class UserController {
 		entreprise.setNom(data.getNomentreprise());
 		entreprise.setAddress(data.getAddressentreprise());
 		entreprise.setLogo(data.getLogo());
+		entreprise.setEmail(data.getEmailentreprise());
+		entreprise.setEmail(data.getTelentreprise());
+		entreprise.setEmail(data.getSecteurentreprise());
 		//accountService.createEntreprise(u , entreprise) ;
 		
 		return accountService.createEntreprise(u , entreprise) ; 

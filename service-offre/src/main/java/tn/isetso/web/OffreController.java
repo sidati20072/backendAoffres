@@ -41,13 +41,7 @@ public class OffreController {
 						
 			return this.offreService.createOffre(data, headers); 
 		}
-		
-	@GetMapping("/sfgd/{id}")
-	public Offre getOffre() {
-		
-		return offreRepository.findById((long) 1).orElse(null);
-}
-	
+
 }
 	
 	

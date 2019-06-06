@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,8 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Autowired
 	private EntrepriseRepository entrepriseRepository;
-	
+	@Value("${s3.bucket.link}")
+	private String bucketLink;
 	@Override
 	public Membre saveUser(FormSimpleUser data) {
 		String type=data.getTypecreation(); 
@@ -44,18 +46,15 @@ public class AccountServiceImpl implements AccountService{
 		String password = this.passwordGenerator() ; 
 			u.setUsername(data.getEmail());u.setEmail(data.getEmail());u.setPassword(password);
 			u.setPassword(bcryptPasswordEncoder.encode(u.getPassword()));
-			//Role r = roleRepository.findByRole("USER");
-			//u.getRoles().add(r);
-			if (userRepository.save(u)!=null) {
+			Entreprise entreprise = this.entrepriseRepository.getOne(1L);
+			u.setEntreprise(entreprise);
+			userRepository.save(u);
 				this.addRoleToUser(u.getUsername(), "USER");
-				this.addUserToEntreprise(u.getUsername(), data.getEntreprise());
+				//this.addUserToEntreprise(u.getUsername(), data.getEntreprise());
 				emailService.sendAccountInformation(u, password);
 				System.out.println("success"); 	
 				System.out.println(u);
-			}
-			else System.out.println("echec");
 			
-		
 		return u;
 	}
 
@@ -138,4 +137,15 @@ public class AccountServiceImpl implements AccountService{
 		return user;
 	}
 
+	@Override
+	public Membre updateImageUser(String newImage , Long id , String type){
+		if(type.equals("user")){
+			Membre membre = userRepository.getOne(id);
+			membre.setImage(bucketLink+newImage);
+		}else if (type.equals("entreprise")){
+			Entreprise entreprise = entrepriseRepository.getOne(id);
+			entreprise.setLogo(bucketLink+newImage);
+		}
+		return null;
+	}
 }

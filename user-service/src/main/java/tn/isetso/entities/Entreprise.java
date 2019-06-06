@@ -30,12 +30,17 @@ public class Entreprise {
 	private String address;
 	private String logo;
 	private Date createAt;
+	private String email;
+	private String tel;
+	private String secteur;
+
 	@OneToMany
 	List<Membre> membres ;
 
 	public Entreprise() {
 		this.membres = new ArrayList<Membre>();
-	} 
+		this.createAt = new Date();
+	}
 	
 	
 }

@@ -2,6 +2,8 @@ package tn.isetso.entities;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.rest.core.annotation.RestResource;
 import tn.isetso.entities.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -49,11 +51,14 @@ public class Offre {
 	private Entreprise entreprise;
 	
 	@ManyToMany( mappedBy="offres" , cascade= CascadeType.ALL)
+	@RestResource(exported = false)
 	private List<Category> categories;
 
-	@OneToMany
+	@OneToMany(mappedBy = "offre")
 	@JsonIgnoreProperties("offre")
-     private List<Demande> demandes;
+	@JsonIgnore
+	@RestResource(exported = false)
+	private List<Demande> demandes;
 
 	public Offre() {
 		this.createAt = new Date();

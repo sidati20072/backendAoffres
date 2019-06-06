@@ -17,6 +17,9 @@ public class RegistrationData {
 	public String role ; 
 	public String nomentreprise ; 
 	public String addressentreprise ; 
+	public String telentreprise ;
+	public String emailentreprise ;
+	public String secteurentreprise ;
 	public String logo ;
 	public String tel ;
 
