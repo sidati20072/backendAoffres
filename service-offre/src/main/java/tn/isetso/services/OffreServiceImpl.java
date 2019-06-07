@@ -55,6 +55,7 @@ public class OffreServiceImpl implements OffreService{
 		offre.setAddress(offreData.getAddress());
 		offre.setCity(offreData.getCity());
 		offre.setPays(offreData.getPays());
+		offre.setFile(offreData.getFile());
 	
 		this.offreRepository.save(offre);
 		offre.setMembre(membre);

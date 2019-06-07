@@ -19,7 +19,7 @@ public interface AccountService {
 	public List<Membre> getUsers();
 	public void addUserToEntreprise(String username, Long idEntreprise);
 	public Membre createFournisseur(Membre u);
-	public Membre updateImageUser(String newImage , Long id , String type);
+	public String updateImageUser(String newImage , Long id , String type);
 
 
 }

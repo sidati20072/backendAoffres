@@ -21,6 +21,7 @@ public class OffreData {
 	private String Address;
 	private String city;
 	private String pays;
+	private String file;
 	private Long categorie;
 	private Long entreprise;
 	private Long user;

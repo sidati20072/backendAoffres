@@ -138,14 +138,16 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Membre updateImageUser(String newImage , Long id , String type){
+	public String updateImageUser(String newImage , Long id , String type){
+		String imageLink = bucketLink+newImage;
 		if(type.equals("user")){
 			Membre membre = userRepository.getOne(id);
-			membre.setImage(bucketLink+newImage);
+			membre.setImage(imageLink);
 		}else if (type.equals("entreprise")){
 			Entreprise entreprise = entrepriseRepository.getOne(id);
-			entreprise.setLogo(bucketLink+newImage);
+			entreprise.setLogo(imageLink);
 		}
-		return null;
+
+		return imageLink;
 	}
 }

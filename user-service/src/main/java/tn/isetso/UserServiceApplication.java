@@ -17,6 +17,8 @@ import tn.isetso.entities.Role;
 import tn.isetso.entities.Entreprise;
 import tn.isetso.entities.Membre;
 import tn.isetso.service.AccountService;
+import tn.isetso.entities.Module;
+import tn.isetso.entities.Plan;
 
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -33,7 +35,7 @@ private RepositoryRestConfiguration repositoryRestConfiguration;
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		repositoryRestConfiguration.exposeIdsFor(Membre.class,Entreprise.class);
+		repositoryRestConfiguration.exposeIdsFor(Membre.class,Entreprise.class,Module.class,Plan.class);
 		/*if (roleRepository.findByRole("USER")==null) {
 			Role r = new Role();		r.setRole("USER");
 			roleRepository.save(r);

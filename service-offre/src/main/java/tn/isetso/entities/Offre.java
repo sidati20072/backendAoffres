@@ -45,6 +45,7 @@ public class Offre {
 	private String city;
 	private String pays;
 	private Date createAt;
+	private String file;
 	@ManyToOne
 	private Membre membre;
 	@ManyToOne
