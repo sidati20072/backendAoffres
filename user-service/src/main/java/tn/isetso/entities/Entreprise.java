@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,10 +37,22 @@ public class Entreprise {
 	private String secteur;
 
 	@OneToMany
-	List<Membre> membres ;
+	private List<Membre> membres ;
+
+	@OneToMany
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
+	private List<Abonnement> abonnements ;
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
+	@OneToMany(mappedBy = "entreprise")
+	private List<Facture> factures;
 
 	public Entreprise() {
+		this.factures = new ArrayList<Facture>();
 		this.membres = new ArrayList<Membre>();
+		this.abonnements = new ArrayList<Abonnement>();
 		this.createAt = new Date();
 	}
 	

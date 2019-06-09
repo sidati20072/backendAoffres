@@ -1,5 +1,6 @@
 package tn.isetso.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.management.relation.Role;
@@ -12,15 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import tn.isetso.dao.EntrepriseRepository;
-import tn.isetso.dao.MembreRepository;
-import tn.isetso.entities.Entreprise;
-import tn.isetso.entities.Membre;
+import tn.isetso.dao.*;
+import tn.isetso.entities.*;
 import tn.isetso.service.AccountService;
+import tn.isetso.service.FactureService;
 import tn.isetso.service.FormSimpleUser;
 
 @RestController
 public class UserController {
+	@Autowired
+	private FactureService factureService;
+	@Autowired
+
+	private PlanRepository planRepository;
+	@Autowired
+	private ModuleRepository moduleRepository;
+	@Autowired
+	private AbonnementRepository abonnementRepository;
+	@Autowired
+		private FactureRepository factureRepository;
 
 	@Autowired
 	private AccountService accountService;
@@ -83,5 +94,26 @@ public class UserController {
 			return accountService.createFournisseur(u) ; 
 			}
 		
-		
+		@GetMapping("/testabonnement")
+		public Facture factureturn(){
+
+			Entreprise entreprise = entrepriseRepository.getOne(1L);
+			Plan plan = planRepository.getOne(1L);
+
+			Abonnement abonnement = new Abonnement();
+			abonnement.setEntreprise(entreprise);
+			abonnement.setPlan(plan);
+			abonnement.setPeriode(12);
+			abonnement.setDateDebut(new Date());
+			abonnement.setDateFin(new Date());
+			abonnementRepository.save(abonnement);
+
+			Facture facture = new Facture();
+			facture.setPostal("555");
+			facture.setAbonnement(abonnement);
+			facture.setEntreprise(entreprise);
+
+			return  factureRepository.save(facture);
+
+		}
 }

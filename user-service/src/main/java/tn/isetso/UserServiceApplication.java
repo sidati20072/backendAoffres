@@ -14,13 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tn.isetso.dao.ConfigRepository;
 import tn.isetso.dao.RoleRepository;
 import tn.isetso.dao.MembreRepository;
-import tn.isetso.entities.Role;
-import tn.isetso.entities.Entreprise;
-import tn.isetso.entities.Membre;
+import tn.isetso.entities.*;
 import tn.isetso.service.AccountService;
-import tn.isetso.entities.Module;
-import tn.isetso.entities.Plan;
-import tn.isetso.entities.Config;
 
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -41,7 +36,7 @@ public static void main(String[] args) {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		repositoryRestConfiguration.exposeIdsFor(Membre.class,Entreprise.class,Module.class,Plan.class,Config.class);
+		repositoryRestConfiguration.exposeIdsFor(Membre.class,Entreprise.class,Module.class,Plan.class,Config.class, Abonnement.class,Facture.class);
 
 		if (roleRepository.findByRole("USER")==null) {
 			Role r = new Role();		r.setRole("USER");

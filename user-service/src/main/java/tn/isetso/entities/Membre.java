@@ -47,9 +47,7 @@ public class Membre {
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private Collection<Role> roles ;
-	
-	
-	
+
 	public Membre(String username, String password,  Collection<Role> roles) {
 		super();
 		this.username = username;
