@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService{
 	
 	
 	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	private BCryptPasswordEncoder bcryptPasswordEncoder2;
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService{
 		
 		
 		
-		u.setPassword(bcryptPasswordEncoder.encode(u.getPassword()));
+		u.setPassword(bcryptPasswordEncoder2.encode(u.getPassword()));
 		userRepository.save(u);
 		emailService.sendAccountInformation(u, password);
 		this.addRoleToUser(u.getUsername(), "USER");

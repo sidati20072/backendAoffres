@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
 @Data
@@ -49,10 +50,16 @@ public class Entreprise {
 	@OneToMany(mappedBy = "entreprise")
 	private List<Facture> factures;
 
+	@OneToMany
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@RestResource(exported = false)
+	private List<Module> modules;
+
 	public Entreprise() {
 		this.factures = new ArrayList<Facture>();
 		this.membres = new ArrayList<Membre>();
 		this.abonnements = new ArrayList<Abonnement>();
+		this.modules = new ArrayList<Module>();
 		this.createAt = new Date();
 	}
 	

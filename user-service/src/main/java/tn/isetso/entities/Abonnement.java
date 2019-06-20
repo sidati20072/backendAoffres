@@ -1,8 +1,10 @@
 package tn.isetso.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
-
+import org.springframework.data.rest.core.annotation.RestResource;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,9 +30,12 @@ public class Abonnement {
     private Entreprise entreprise;
 
     @OneToOne
+    @RestResource(exported = false)
     private Plan plan;
 
     @OneToMany
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<Module> modules;
 
     public Abonnement() {
