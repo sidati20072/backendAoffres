@@ -7,6 +7,7 @@ import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,7 +72,7 @@ public class UserController {
 		entreprise.setEmail(data.getTelentreprise());
 		entreprise.setEmail(data.getSecteurentreprise());
 		//accountService.createEntreprise(u , entreprise) ;
-		
+
 		return accountService.createEntreprise(u , entreprise) ; 
 		}
 	

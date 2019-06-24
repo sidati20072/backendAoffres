@@ -1,9 +1,7 @@
 package tn.isetso.sec;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,8 +18,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 public class JWTAuthorizationFiltre extends OncePerRequestFilter{
+    private final List<String> allowedOrigins = Arrays.asList("http://localhost:4200");
 
-	@Override
+    @Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
@@ -31,7 +30,21 @@ public class JWTAuthorizationFiltre extends OncePerRequestFilter{
 		response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Authorization, authorization,token,amount");
 	    response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, authorization,Authorization,token,amount");
 
-		response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE");
+        // Access-Control-Allow-Origin
+        String origin = request.getHeader("Origin");
+        response.setHeader("Access-Control-Allow-Origin", allowedOrigins.contains(origin) ? origin : "");
+        response.setHeader("Vary", "Origin");
+
+        // Access-Control-Max-Age
+        response.setHeader("Access-Control-Max-Age", "3600");
+        // Access-Control-Allow-Credentials
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        // Access-Control-Allow-Headers
+        response.setHeader("Access-Control-Allow-Headers",
+                "Origin, X-Requested-With, Content-Type, Accept, " + "X-CSRF-TOKEN");
+
+
+        response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE");
 		if (request.getMethod().equals("OPTIONS")){
 			
 			response.setStatus(HttpServletResponse.SC_OK);

@@ -8,13 +8,16 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tn.isetso.dao.EntrepriseRepository;
+import tn.isetso.dao.NotificationRepository;
 import tn.isetso.dao.RoleRepository;
 import tn.isetso.dao.MembreRepository;
 import tn.isetso.entities.Entreprise;
+import tn.isetso.entities.Notification;
 import tn.isetso.entities.Role;
 import tn.isetso.entities.Membre;
 import tn.isetso.web.RegistrationData;
@@ -22,8 +25,10 @@ import tn.isetso.web.RegistrationData;
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService{
-	
-	
+
+	@Autowired
+	private SimpMessagingTemplate simplSimpMessagingTemplate;
+
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	@Autowired
@@ -34,7 +39,8 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Autowired
 	private EmailService emailService;
-	
+	@Autowired
+	private NotificationRepository notificationRepository;
 	@Autowired
 	private EntrepriseRepository entrepriseRepository;
 	@Value("${s3.bucket.link}")
@@ -110,12 +116,26 @@ public class AccountServiceImpl implements AccountService{
 		entrepriseRepository.save(entreprise);
 		
 		user.setPassword(bcryptPasswordEncoder.encode(user.getPassword()));
-		userRepository.save(user);
-		user.setEntreprise(entreprise);
-		user.getRoles().add(roleRepository.findByRole("ADMIN"));
-		user.getRoles().add(roleRepository.findByRole("USER"));
-		return user;
-	}
+		if (userRepository.save(user)!=null) {
+
+			user.setEntreprise(entreprise);
+			user.getRoles().add(roleRepository.findByRole("ADMIN"));
+			user.getRoles().add(roleRepository.findByRole("USER"));
+			Notification notifications = new Notification();
+			notifications.setMembre(user);
+			notifications.setIdResource(entreprise.getId());
+			notifications.setMessage("une entreprise viens d'etre inscrtite");
+			notifications.setType("entreprise");
+			this.notificationRepository.save(notifications);
+			simplSimpMessagingTemplate.convertAndSend("/topic/notification", notifications);
+
+			return user;
+
+
+		}
+
+		return null;
+		}
 
 	@Override
 	public List<Membre> getUsers() {

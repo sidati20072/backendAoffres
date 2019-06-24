@@ -36,6 +36,8 @@ public class Entreprise {
 	private String email;
 	private String tel;
 	private String secteur;
+	private String web;
+	private String etat;
 
 	@OneToMany
 	private List<Membre> membres ;
@@ -61,6 +63,7 @@ public class Entreprise {
 		this.abonnements = new ArrayList<Abonnement>();
 		this.modules = new ArrayList<Module>();
 		this.createAt = new Date();
+		this.etat = "enabled";
 	}
 	
 	
