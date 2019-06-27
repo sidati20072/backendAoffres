@@ -30,7 +30,8 @@ public class Facture {
 
     @ManyToOne
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonIgnore
+
+    @RestResource(exported = false)
     private Entreprise entreprise;
 
     public Facture() {

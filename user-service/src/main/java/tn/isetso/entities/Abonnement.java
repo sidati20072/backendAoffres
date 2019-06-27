@@ -35,7 +35,8 @@ public class Abonnement {
 
     @OneToMany
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonIgnore
+    //@JsonIgnore
+    @RestResource(exported = false)
     private List<Module> modules;
 
     public Abonnement() {
