@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 @RestController
@@ -56,10 +57,12 @@ public class AbonnementController {
 			Date datefin = new Date();
 			abonnement.setTotal(data.getTotal());
 			abonnement.setRefpayment(data.getRefpayment());
-
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, data.getPeriode());
+			datefin = cal.getTime();
 			abonnement.setDateFin(datefin);
 			abonnementRepository.save(abonnement);
-
+			entreprise.getAbonnements().add(abonnement);
 			Facture facture = new Facture();
 			facture.setPostal(data.getPostal());
 			facture.setAbonnement(abonnement);

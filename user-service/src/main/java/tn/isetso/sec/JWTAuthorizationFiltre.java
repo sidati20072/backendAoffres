@@ -26,14 +26,14 @@ public class JWTAuthorizationFiltre extends OncePerRequestFilter{
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 	    response.setHeader("Access-Control-Allow-Credentials", "true");
-	    response.addHeader("Access-Control-Allow-headers", "Origin, Accept, X-Requested-With, Headers,Authorization, authorization,token,amount");
+	    response.addHeader("Access-Control-Allow-headers", "token, Origin, Accept, X-Requested-With, Headers,Authorization, authorization,token,amount");
 		response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Authorization, authorization,token,amount");
-	    response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, authorization,Authorization,token,amount");
+	    response.setHeader("Access-Control-Allow-Headers", "token, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, authorization,Authorization,token,amount");
 
         // Access-Control-Allow-Origin
-        String origin = request.getHeader("Origin");
-        response.setHeader("Access-Control-Allow-Origin", allowedOrigins.contains(origin) ? origin : "");
-        response.setHeader("Vary", "Origin");
+        //String origin = request.getHeader("Origin");
+        //response.setHeader("Access-Control-Allow-Origin", allowedOrigins.contains(origin) ? origin : "");
+        response.setHeader("Vary", "Origin,token,amount");
 
         // Access-Control-Max-Age
         response.setHeader("Access-Control-Max-Age", "3600");
@@ -41,7 +41,7 @@ public class JWTAuthorizationFiltre extends OncePerRequestFilter{
         response.setHeader("Access-Control-Allow-Credentials", "true");
         // Access-Control-Allow-Headers
         response.setHeader("Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept, " + "X-CSRF-TOKEN");
+                "Origin,token,amount, X-Requested-With, Content-Type, Accept, " + "X-CSRF-TOKEN");
 
 
         response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE");

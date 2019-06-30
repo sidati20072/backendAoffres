@@ -42,7 +42,8 @@ public class Entreprise {
 
 	@OneToMany
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@JsonIgnore
+	//@JsonIgnore
+	@RestResource(exported = false)
 	private List<Abonnement> abonnements ;
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
